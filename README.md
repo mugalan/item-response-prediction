@@ -32,22 +32,46 @@ A high-level, production-friendly wrapper for adaptive item recommendation and B
 
 ## Installation & Requirements
 
-This module is pure Python. Dependencies used by the supporting classes/examples:
+**Requirements**
+
+* Python ≥ 3.9
+* `numpy` (required)
+* `plotly` (optional, only for plotting utilities)
+
+**Install (from GitHub)**
 
 ```bash
-python >= 3.9
-numpy
-plotly
+pip install "git+https://github.com/mugalan/item-response-prediction.git"
 ```
 
-If you plan to run the plotting utilities, ensure Plotly is installed:
+**Optional: plotting support**
 
 ```bash
-pip install numpy plotly
+pip install plotly
 ```
 
-> **Note**: The wrapper depends on the presence of `Bayesian2PL`, `ItemizedBayesian2PL`, and `ItemResponsePredictionRunner` in your module path. Make sure these classes are imported/defined before using `ItemResponsePrediction`.
+> If your package defines an extra named `plotting`, you can alternatively do:
+>
+> ```bash
+> pip install "git+https://github.com/mugalan/item-response-prediction.git#egg=item-response-prediction[plotting]"
+> ```
 
+**Import**
+
+```python
+from item_response_prediction import ItemResponsePrediction
+```
+
+**Colab tip**
+After installing, run the import in a new cell (or `Runtime > Restart session`) so the environment picks up the newly installed package.
+
+**Developer (editable) install**
+
+```bash
+git clone https://github.com/mugalan/item-response-prediction.git
+cd item-response-prediction
+pip install -e .
+```
 ---
 
 ## Concepts at a Glance
