@@ -23,6 +23,6 @@ plotting = ["plotly>=5.0"]
 [project.urls]
 Repository = "https://github.com/mugalan/item-response-prediction"
 
-[tool.setuptools.packages.find]
-where = ["."]
+[tool.setuptools]
+packages = ["item_response_prediction"]
 
