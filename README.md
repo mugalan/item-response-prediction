@@ -352,4 +352,6 @@ A: Initialize with `engine="bandit"` (the `policy` is ignored in that case) and 
 
 ## License
 
-Add your license terms here.
+MIT License
+
+Copyright (c) 2025 Mugalan
