@@ -1,5 +1,3 @@
-# pyproject.toml for ItemResponsePrediction
-
 [build-system]
 requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -12,19 +10,19 @@ readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.9"
 authors = [
-{ name = "Mugalan", email = "[mugalan@gmail.com](mailto:mugalan@gmail.com)" }
+  { name = "Mugalan", email = "mugalan@gmail.com" }
+]
+dependencies = [
+  "numpy>=1.21"
 ]
 
-dependencies = [
-"numpy>=1.21",
-"plotly>=5.0",
-]
+# Make Plotly optional (install with: pip install item-response-prediction[plotting])
+[project.optional-dependencies]
+plotting = ["plotly>=5.0"]
 
 [project.urls]
-
-# Update this to the actual repository URL
-
 Repository = "https://github.com/mugalan/item-response-prediction"
 
 [tool.setuptools.packages.find]
 where = ["."]
+
