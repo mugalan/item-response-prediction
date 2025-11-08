@@ -89,8 +89,8 @@ pip install -e .
 ## Quick Start
 
 ```python
-from your_module import ItemResponsePrediction
-
+import json
+from IPython.display import display, HTML
 items = [
     {"label": "Q1", "b": 0.30, "kappa": 40.0, "gamma": 0.0},
     {"label": "Q2", "b": 0.45, "kappa": 50.0, "gamma": 0.0},
@@ -112,6 +112,8 @@ print(rec["response"]["meta_data"]["item"])  # the recommended item dict
 # 2) Record an observed outcome for that label (updates posterior & bandit)
 label = rec["response"]["meta_data"]["item"]["label"]
 step_out = irp.update_estimator(label=label, outcome=1)  # 1=correct/positive, 0=incorrect/negative
+figure=HTML(json.loads(step_out['response']['data']).get('figure'))
+display(figure)
 
 # 3) Repeat recommend → update loop
 ```
@@ -258,6 +260,9 @@ Both are numerically stabilized by clipping logits and probabilities.
 ### A. Ideal-point, item dict pool
 
 ```python
+import json
+from IPython.display import display, HTML
+
 items = [
     {"label": "I1", "b": 0.25, "kappa": 35.0, "gamma": 0.0},
     {"label": "I2", "b": 0.50, "kappa": 50.0, "gamma": 0.0},
@@ -270,17 +275,21 @@ for t in range(5):
     rec = irp.recommend()
     label = rec["response"]["meta_data"]["item"]["label"]
 
-    # fake outcome: higher success near b≈0.5
     import random
-    y = 1 if random.random() < (0.8 if label=="I2" else 0.5) else 0
+    y = 1 if random.random() < (0.8 if label == "I2" else 0.5) else 0
 
     out = irp.update_estimator(label, y)
-    print(out["response"]["meta_data"]["theta_hat"], out["response"]["meta_data"]["avg_reward"])
+    fig_html = json.loads(out["response"]["data"])["figure"]
+    display(HTML(fig_html))             
+    print(out["response"]["meta_data"]["theta_hat"],
+          out["response"]["meta_data"]["avg_reward"])
 ```
 
 ### B. 2PL, item dict pool with discrimination
 
 ```python
+import json
+from IPython.display import display, HTML
 items_2pl = [
     {"label": "Q1", "b": 0.35, "a": 3.5},
     {"label": "Q2", "b": 0.50, "a": 4.0},
@@ -293,6 +302,8 @@ print("Recommend:", rec["response"]["meta_data"]["item"])  # inspect choice
 
 # Suppose user answered Q2 incorrectly (0)
 out = irp2.update_estimator("Q2", 0)
+fig_html = json.loads(out["response"]["data"])["figure"]
+display(HTML(fig_html))             
 print("theta(mean):", out["response"]["meta_data"]["theta_hat"])
 ```
 
@@ -305,6 +316,10 @@ new_items = [
 ]
 
 r = irp.reset_estimator(alpha=2.0, beta=2.0, items=new_items, likelihood="ideal")
+fig_html = json.loads(out["response"]["data"])["figure"]
+display(HTML(fig_html))             # <-- actually display it
+print(out["response"]["meta_data"]["theta_hat"],
+      out["response"]["meta_data"]["avg_reward"])
 print(r["status"], r["response"]["meta_data"]["posterior_summary"])
 ```
 
